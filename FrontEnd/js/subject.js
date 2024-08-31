@@ -59,7 +59,11 @@ document.addEventListener("DOMContentLoaded", () => {
             const response = await fetch("http://127.0.0.1:8000/persons/?skip=0&limit=100");
             const persons = await response.json();
             console.log("Personas cargadas:", persons); // Log para verificar datos
-            personSelect.innerHTML = persons.map(person => `<option value="${person.id}">${person.name} ${person.surname}</option>`).join("");
+            if (persons.length === 0){
+                personSelect.innerHTML = `<option>No existen personas cargadas...</option>`
+            }
+            personSelect.innerHTML = `<option value="">Seleccione una persona...</option>` + 
+            persons.map(person => `<option value="${person.id}">${person.name} ${person.surname}</option>`).join("");        
         } catch (error) {
             console.error("Error al cargar las personas:", error);
             errorElement.textContent = "Error al cargar las personas.";
@@ -70,6 +74,11 @@ document.addEventListener("DOMContentLoaded", () => {
         try {
             const response = await fetch(`http://127.0.0.1:8000/person-careers/${personId}`);
             const careers = await response.json();
+            if (careers.length === 0) {
+                careerSelect.innerHTML = `<option>La persona no tiene carreras asignadas</option>`
+                subjectSelect.innerHTML = "";
+                return;
+            }
             console.log("Carreras cargadas para la persona:", careers); // Log para verificar datos
             careerSelect.innerHTML = ""; // Asegúrate de vaciar el selector primero
 
