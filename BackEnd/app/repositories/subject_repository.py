@@ -50,7 +50,7 @@ class SubjectRepository:
         db_subject = self.get_subject_by_id(subject_id)
         if db_subject is None:
             return None
-        for key, value in subject.dict(exclude_unset=True).items():
+        for key, value in subject.model_dump(exclude_unset=True).items():
             setattr(db_subject, key, value)
         self.db.commit()
         self.db.refresh(db_subject)

@@ -21,7 +21,7 @@ class PersonRepository:
 
     def create_person(self, person: PersonCreate) -> Person:
         """Crea una nueva persona."""
-        db_person = Person(**person.dict())
+        db_person = Person(**person.model_dump())
         self.db.add(db_person)
         self.db.commit()
         self.db.refresh(db_person)
@@ -32,7 +32,7 @@ class PersonRepository:
         db_person = self.get_person_by_id(person_id)
         if db_person is None:
             return None
-        for key, value in person.dict(exclude_unset=True).items():
+        for key, value in person.model_dump(exclude_unset=True).items():
             setattr(db_person, key, value)
         self.db.commit()
         self.db.refresh(db_person)

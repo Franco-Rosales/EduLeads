@@ -17,7 +17,7 @@ class CareerRepository:
 
     def create_career(self, career: CareerCreate) -> Career:
         """Crea una nueva carrera."""
-        db_career = Career(**career.dict())
+        db_career = Career(**career.model_dump())
         self.db.add(db_career)
         self.db.commit()
         self.db.refresh(db_career)
@@ -28,7 +28,7 @@ class CareerRepository:
         db_career = self.get_career_by_id(career_id)
         if db_career is None:
             return None
-        for key, value in career.dict(exclude_unset=True).items():
+        for key, value in career.model_dump(exclude_unset=True).items():
             setattr(db_career, key, value)
         self.db.commit()
         self.db.refresh(db_career)

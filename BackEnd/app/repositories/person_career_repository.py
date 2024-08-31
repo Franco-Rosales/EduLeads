@@ -8,7 +8,7 @@ class PersonCareerRepository:
 
     def create_person_career(self, person_career: PersonCareerCreate) -> PersonCareer:
         """Crea una nueva relación entre una persona y una carrera."""
-        db_person_career = PersonCareer(**person_career.dict())
+        db_person_career = PersonCareer(**person_career.model_dump())
         self.db.add(db_person_career)
         self.db.commit()
         self.db.refresh(db_person_career)

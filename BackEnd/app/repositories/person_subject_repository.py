@@ -8,7 +8,7 @@ class PersonSubjectRepository:
 
     def create_person_subject(self, person_subject: PersonSubjectCreate) -> PersonSubject:
         """Crea una nueva relación entre una persona y una materia."""
-        db_person_subject = PersonSubject(**person_subject.dict())
+        db_person_subject = PersonSubject(**person_subject.model_dump())
         self.db.add(db_person_subject)
         self.db.commit()
         self.db.refresh(db_person_subject)

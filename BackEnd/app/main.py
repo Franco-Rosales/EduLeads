@@ -17,11 +17,11 @@ app.add_middleware(
 )
 
 # Incluir routers
-app.include_router(person_router.router, prefix="/persons", tags=["persons"])
-app.include_router(career_router.router, prefix="/careers", tags=["careers"])
-app.include_router(subject_router.router, prefix="/subjects", tags=["subjects"])
-app.include_router(person_career_router.router, prefix="/person-careers", tags=["person-careers"])
-app.include_router(person_subject_router.router, prefix="/person-subjects", tags=["person-subjects"])
+app.include_router(person_router.router, tags=["persons"])
+app.include_router(career_router.router, tags=["careers"])
+app.include_router(subject_router.router, tags=["subjects"])
+app.include_router(person_career_router.router, tags=["person-careers"])
+app.include_router(person_subject_router.router, tags=["person-subjects"])
 
 @app.get("/")
 async def root():
