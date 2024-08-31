@@ -15,6 +15,6 @@ class PersonSubject(BaseModel):
     times_taken: Optional[int] = None
     enrollment_year: Optional[int] = None
 
-    class Config:
+    class ConfigDict:
         orm_mode = True
 

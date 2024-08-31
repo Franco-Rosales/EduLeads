@@ -14,7 +14,7 @@ class CareerUpdate(CareerBase):
 class Career(CareerBase):
     id: int
 
-    class Config:
+    class ConfigDict:
         orm_mode = True
 
 

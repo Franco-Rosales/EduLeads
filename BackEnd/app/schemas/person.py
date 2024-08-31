@@ -17,6 +17,6 @@ class PersonUpdate(PersonBase):
 class Person(PersonBase):
     id: int
 
-    class Config:
+    class ConfigDict:
         orm_mode = True
 

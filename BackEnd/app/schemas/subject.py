@@ -15,5 +15,5 @@ class SubjectUpdate(SubjectBase):
 class Subject(SubjectBase):
     id: int
 
-    class Config:
+    class ConfigDict:
         orm_mode = True

@@ -11,6 +11,6 @@ class PersonCareer(BaseModel):
     career_id: int
     time_taken: Optional[int] = None
 
-    class Config:
+    class ConfigDict:
         orm_mode = True
 
