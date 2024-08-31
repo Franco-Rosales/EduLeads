@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy.orm import Session
 from app.services.person_service import PersonService
 from app.schemas.person import PersonCreate, PersonUpdate, Person

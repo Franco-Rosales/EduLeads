@@ -13,6 +13,11 @@ class PersonRepository:
     def get_all_people(self, skip: int = 0, limit: int = 100) -> list[Person]:
         """Obtiene todas las personas con paginación."""
         return self.db.query(Person).offset(skip).limit(limit).all()
+    
+    def get_person_by_email(self, email: str) -> Person:
+        """Obtiene una persona por su email."""
+        return self.db.query(Person).filter(Person.email == email).first()
+
 
     def create_person(self, person: PersonCreate) -> Person:
         """Crea una nueva persona."""

@@ -14,6 +14,8 @@ class PersonService:
         # Validaciones
         if not person.email:
             raise ValueError("El correo electrónico es obligatorio.")
+        if self.email_exists(person.email):
+            raise ValueError("El correo electrónico ya está registrado.")
         if len(person.phone) < 7:
             raise ValueError("El número de teléfono debe tener al menos 7 dígitos.")
         
@@ -30,6 +32,11 @@ class PersonService:
     def get_all_people(self, skip: int = 0, limit: int = 100) -> List[Person]:
         """Obtiene todas las personas con paginación."""
         return self.person_repository.get_all_people(skip, limit)
+    
+    def email_exists(self, email: str) -> bool:
+        """Verifica si el email ya está registrado en la base de datos."""
+        return self.person_repository.get_person_by_email(email) is not None
+
 
     def update_person(self, person_id: int, person_update: PersonUpdate):
         """Actualiza una persona existente después de validar los datos."""
