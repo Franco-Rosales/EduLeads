@@ -56,6 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     async function loadPersons() {
         try {
+            errorElement.textContent = "";
             const response = await fetch("http://127.0.0.1:8000/persons/?skip=0&limit=100");
             const persons = await response.json();
             console.log("Personas cargadas:", persons); // Log para verificar datos
@@ -72,6 +73,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     async function loadCareersForPerson(personId) {
         try {
+            errorElement.textContent = "";
             const response = await fetch(`http://127.0.0.1:8000/person-careers/${personId}`);
             const careers = await response.json();
             if (careers.length === 0) {
@@ -100,6 +102,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     async function loadSubjectsForCareer(careerId) {
         try {
+            errorElement.textContent = "";
             const response = await fetch(`http://127.0.0.1:8000/subjects/subjects_by_career/${careerId}`);
             const subjects = await response.json();
             console.log("Materias cargadas para la carrera:", subjects); // Log para verificar datos
