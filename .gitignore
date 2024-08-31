@@ -1,0 +1,19 @@
+# Ignorar archivos y directorios generados por el sistema operativo
+.DS_Store
+Thumbs.db
+
+# Ignorar archivos y directorios generados por el entorno de desarrollo
+node_modules/
+dist/
+build/
+.env
+
+# Ignorar archivos y directorios generados por el IDE
+.idea/
+.vscode/
+
+# Ignorar archivos y directorios específicos del proyecto
+config.js
+logs/
+*.pyc
+
