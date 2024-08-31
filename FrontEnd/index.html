@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Leads</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div id="app">
+        <div class="navbar">
+            <button id="show-person-registration">Registro de Personas</button>
+            <button id="show-career-registration">Inscripción en Carreras</button>
+            <button id="show-subject-registration">Inscripción en Materias</button>
+            <button id="show-create-career">Crear Carrera</button>
+            <button id="show-create-subject">Crear Materia</button>
+        </div>
+
+        <div id="person-registration" class="screen">
+            <h2>Registro de Personas</h2>
+            <div id="person-error" class="error-message"></div>
+            <form id="person-form">
+                <label for="name">Nombre:</label>
+                <input type="text" id="name" required>
+
+                <label for="last_name">Apellido:</label>
+                <input type="text" id="last_name" required>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" required>
+
+                <label for="address">Dirección:</label>
+                <input type="text" id="address" required>
+
+                <label for="phone">Teléfono:</label>
+                <input type="text" id="phone" required>
+
+                <button type="submit">Registrar Persona</button>
+            </form>
+        </div>
+
+        <div id="career-registration" class="screen">
+            <h2>Inscripción en Carreras</h2>
+            <div id="career-error" class="error-message"></div>
+            <form id="career-form">
+                <label for="person-select">Seleccione una Persona:</label>
+                <select id="person-select"></select>
+        
+                <label for="career-select">Seleccione Carreras:</label>
+                <select id="career-select" multiple></select>
+        
+                <label for="time-taken">Tiempo de Cursado (en horas):</label>
+                <input type="number" id="time-taken" min="0" step="1" required>
+        
+                <button type="submit">Inscribir en Carreras</button>
+            </form>
+        </div>
+        
+
+        <div id="subject-registration" class="screen">
+            <h2>Inscripción en Materias</h2>
+            <div id="subject-error" class="error-message"></div>
+            <form id="subject-form">
+                <label for="person-select-subject">Seleccione una Persona:</label>
+                <select id="person-select-subject"></select>
+        
+                <label for="career-select-subject">Seleccione una Carrera:</label>
+                <select id="career-select-subject"></select>
+        
+                <label for="subject-select">Seleccione Materias:</label>
+                <select id="subject-select" multiple></select>
+        
+                <button type="submit">Inscribir en Materias</button>
+            </form>
+        </div>
+        
+        
+
+        <div id="create-career" class="screen">
+            <h2>Crear Carrera</h2>
+            <div id="create-career-error" class="error-message"></div>
+            <form id="create-career-form">
+                <label for="career-name">Nombre de la Carrera:</label>
+                <input type="text" id="career-name" required>
+        
+                <label for="career-description">Descripción:</label>
+                <input type="text" id="career-description">
+        
+                <button type="submit">Crear Carrera</button>
+            </form>
+        </div>
+
+        <div id="create-subject" class="screen">
+            <h2>Crear Materia</h2>
+            <div id="create-subject-error" class="error-message"></div>
+            <form id="create-subject-form">
+                <label for="subject-name">Nombre de la Materia:</label>
+                <input type="text" id="subject-name" required>
+        
+                <label for="subject-description">Descripción:</label>
+                <input type="text" id="subject-description">
+        
+                <label for="subject-careers">Seleccione Carreras:</label>
+                <select id="subject-careers" multiple></select>
+        
+                <button type="submit">Crear Materia</button>
+            </form>
+        </div>        
+    </div>
+    
+    <script src="js/main.js"></script>
+    <script src="js/create-career.js"></script>
+    <script src="js/create-subject.js"></script>
+    <script src="js/person.js"></script>
+    <script src="js/career.js"></script>
+    <script src="js/subject.js"></script>
+</body>
+</html>
