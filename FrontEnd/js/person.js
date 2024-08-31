@@ -13,8 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
         };
 
         try {
-
-            const response = await fetch("http://127.0.0.1:8000/persons/persons/", {
+            const response = await fetch("http://127.0.0.1:8000/persons/", {  // Cambié la URL aquí para eliminar el prefijo repetido
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -22,7 +21,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 body: JSON.stringify(personData)
             });
 
-            if (!response.ok) throw new Error("Error al registrar la persona");
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.detail || "Error al registrar la persona");  // Extrae el mensaje de error
+            }
 
             alert("Persona registrada con éxito");
             personForm.reset();

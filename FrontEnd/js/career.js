@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         try {
-            const response = await fetch("http://127.0.0.1:8000/person-careers/person-careers/", {
+            const response = await fetch("http://127.0.0.1:8000/person-careers", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     async function loadPersons() {
         try {
-            const response = await fetch("http://127.0.0.1:8000/persons/persons/");
+            const response = await fetch("http://127.0.0.1:8000/persons");
             const data = await response.json();
 
             const personSelect = document.getElementById("person-select");
@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     async function loadCareers() {
         try {
-            const response = await fetch("http://127.0.0.1:8000/careers/careers/");
+            const response = await fetch("http://127.0.0.1:8000/careers");
             const data = await response.json();
 
             const careerSelect = document.getElementById("career-select");

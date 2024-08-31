@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         try {
-            const response = await fetch("http://127.0.0.1:8000/subjects/subjects/", {
+            const response = await fetch("http://127.0.0.1:8000/subjects", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     async function loadCareersForSubjectCreation() {
         try {
-            const response = await fetch("http://127.0.0.1:8000/careers/careers/");
+            const response = await fetch("http://127.0.0.1:8000/careers");
             const data = await response.json();
 
             const careerSelect = document.getElementById("subject-careers");

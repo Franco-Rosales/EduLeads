@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     async function loadPersons() {
         try {
-            const response = await fetch("http://127.0.0.1:8000/persons/persons/?skip=0&limit=100");
+            const response = await fetch("http://127.0.0.1:8000/persons/?skip=0&limit=100");
             const persons = await response.json();
             console.log("Personas cargadas:", persons); // Log para verificar datos
             personSelect.innerHTML = persons.map(person => `<option value="${person.id}">${person.name} ${person.surname}</option>`).join("");
@@ -68,13 +68,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     async function loadCareersForPerson(personId) {
         try {
-            const response = await fetch(`http://127.0.0.1:8000/person-careers/person-careers/${personId}`);
+            const response = await fetch(`http://127.0.0.1:8000/person-careers/${personId}`);
             const careers = await response.json();
             console.log("Carreras cargadas para la persona:", careers); // Log para verificar datos
             careerSelect.innerHTML = ""; // Asegúrate de vaciar el selector primero
 
             for (const career of careers) {
-                const careerResponse = await fetch(`http://127.0.0.1:8000/careers/careers/${career.career_id}`);
+                const careerResponse = await fetch(`http://127.0.0.1:8000/careers/${career.career_id}`);
                 const careerData = await careerResponse.json();
                 careerSelect.innerHTML += `<option value="${careerData.id}">${careerData.name}</option>`;
             }
@@ -91,7 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     async function loadSubjectsForCareer(careerId) {
         try {
-            const response = await fetch(`http://127.0.0.1:8000/subjects/subjects/subjects_by_career/${careerId}`);
+            const response = await fetch(`http://127.0.0.1:8000/subjects/subjects_by_career/${careerId}`);
             const subjects = await response.json();
             console.log("Materias cargadas para la carrera:", subjects); // Log para verificar datos
             subjectSelect.innerHTML = ""; // Asegúrate de vaciar el selector primero
@@ -112,7 +112,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 enrollment_year: new Date().getFullYear()
             };
 
-            const response = await fetch("http://127.0.0.1:8000/person-subjects/person-subjects/", {
+            const response = await fetch("http://127.0.0.1:8000/person-subjects", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
