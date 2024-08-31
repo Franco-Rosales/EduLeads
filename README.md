@@ -1,6 +1,6 @@
 # EduLeads
 
-## Table of Contents
+## Indice
 1. Descripción del Proyecto
 2. Requisitos del Sistema
 3. Instalación y Configuración
