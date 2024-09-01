@@ -5,15 +5,15 @@ from app.routers import person_router, career_router, subject_router, person_car
 
 app = FastAPI()
 
-# Crear todas las tablas en la base de datos
+
 Base.metadata.create_all(bind=engine)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Permitir solicitudes desde cualquier origen
+    allow_origins=["*"],  
     allow_credentials=True,
-    allow_methods=["*"],  # Permitir todos los métodos (GET, POST, PUT, DELETE, etc.)
-    allow_headers=["*"],  # Permitir todos los encabezados
+    allow_methods=["*"],  
+    allow_headers=["*"],  
 )
 
 # Incluir routers

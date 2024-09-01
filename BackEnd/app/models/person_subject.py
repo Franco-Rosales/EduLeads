@@ -4,9 +4,10 @@ from app.database import Base
 
 class PersonSubject(Base):
     __tablename__ = 'person_subjects'
-    person_id = Column(Integer, ForeignKey('people.id'), primary_key=True)
-    subject_id = Column(Integer, ForeignKey('subjects.id'), primary_key=True)
-    career_id = Column(Integer, ForeignKey('careers.id'))  # Referencia a la carrera
+    person_subject_id = Column(Integer, primary_key=True, index=True)
+    person_id = Column(Integer, ForeignKey('people.id'))
+    subject_id = Column(Integer, ForeignKey('subjects.id'))
+    career_id = Column(Integer, ForeignKey('careers.id'))
     times_taken = Column(Integer)
     enrollment_year = Column(Integer)
     person = relationship('Person', back_populates='subjects')
