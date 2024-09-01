@@ -13,6 +13,10 @@ class PersonCareerRepository:
         self.db.commit()
         self.db.refresh(db_person_career)
         return db_person_career
+    
+    def get_person_careers_all(self) -> list[PersonCareer]:
+        """Obtiene todas las inscripciones de personas en carreras."""
+        return self.db.query(PersonCareer).all()
 
     def get_person_careers(self, person_id: int) -> list[PersonCareer]:
         """Obtiene todas las carreras en las que está inscrita una persona."""

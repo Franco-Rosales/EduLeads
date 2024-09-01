@@ -7,10 +7,10 @@ class PersonCareerCreate(BaseModel):
     time_taken: Optional[int] = None
 
 class PersonCareer(BaseModel):
+    person_career_id: int 
     person_id: int
     career_id: int
     time_taken: Optional[int] = None
 
-    class ConfigDict:
+    class Config:
         orm_mode = True
-

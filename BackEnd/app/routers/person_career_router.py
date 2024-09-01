@@ -15,6 +15,12 @@ def create_person_career(person_career: PersonCareerCreate, db: Session = Depend
         return person_career_service.create_person_career(person_career)
     except ValueError as e:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
+    
+@router.get("/", response_model=List[PersonCareer])
+def get_person_careers(db: Session = Depends(get_db)):
+    """Obtiene todas las inscripciones de personas en carreras."""
+    person_career_service = PersonCareerService(db)
+    return person_career_service.get_person_careers_all()
 
 @router.get("/{person_id}", response_model=List[PersonCareer])
 def get_person_careers(person_id: int, db: Session = Depends(get_db)):

@@ -15,6 +15,12 @@ def create_person_subject(person_subject: PersonSubjectCreate, db: Session = Dep
         return person_subject_service.create_person_subject(person_subject)
     except ValueError as e:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
+    
+@router.get("/", response_model=List[PersonSubject])
+def get_person_subjects(db: Session = Depends(get_db)):
+    """Obtiene todas las inscripciones de personas en materias."""
+    person_subject_service = PersonSubjectService(db)
+    return person_subject_service.get_person_subjects_all()
 
 @router.get("/{person_id}", response_model=List[PersonSubject])
 def get_person_subjects(person_id: int, db: Session = Depends(get_db)):

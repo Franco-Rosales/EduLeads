@@ -13,6 +13,10 @@ class PersonSubjectRepository:
         self.db.commit()
         self.db.refresh(db_person_subject)
         return db_person_subject
+    
+    def get_person_subjects_all(self) -> list[PersonSubject]:
+        """Obtiene todas las inscripciones de personas en materias."""
+        return self.db.query(PersonSubject).all()
 
     def get_person_subjects(self, person_id: int) -> list[PersonSubject]:
         """Obtiene todas las materias en las que está inscrita una persona."""

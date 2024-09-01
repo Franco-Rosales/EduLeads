@@ -19,6 +19,10 @@ class PersonCareerService:
 
         # Crear relación
         return self.person_career_repository.create_person_career(person_career)
+    
+    def get_person_careers_all(self):
+        """Obtiene todas las inscripciones de personas en carreras."""
+        return self.person_career_repository.get_person_careers_all()
 
     def get_person_careers(self, person_id: int):
         """Obtiene todas las carreras en las que está inscrita una persona."""

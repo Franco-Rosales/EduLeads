@@ -23,6 +23,10 @@ class PersonSubjectService:
 
         # Crear relación
         return self.person_subject_repository.create_person_subject(person_subject)
+    
+    def get_person_subjects_all(self):
+        """Obtiene todas las inscripciones de personas en materias."""
+        return self.person_subject_repository.get_person_subjects_all()
 
     def get_person_subjects(self, person_id: int):
         """Obtiene todas las materias en las que está inscrita una persona."""
