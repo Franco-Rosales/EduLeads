@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     const createSubjectForm = document.getElementById("create-subject-form");
-
+   
     // Cargar carreras
     loadCareersForSubjectCreation();
 
@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         try {
-            const response = await fetch("http://127.0.0.1:8000/subjects", {
+            const response = await fetch("http://127.0.0.1:8000/subjects/", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -33,6 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             alert("Materia creada con éxito");
             createSubjectForm.reset();
+            
             document.getElementById("create-subject-error").textContent = "";
         } catch (error) {
             document.getElementById("create-subject-error").textContent = error.message;
@@ -41,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     async function loadCareersForSubjectCreation() {
         try {
-            const response = await fetch("http://127.0.0.1:8000/careers");
+            const response = await fetch("http://127.0.0.1:8000/careers/");
             const data = await response.json();
 
             const careerSelect = document.getElementById("subject-careers");

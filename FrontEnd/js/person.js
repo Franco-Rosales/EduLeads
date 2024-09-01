@@ -1,5 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     const personForm = document.getElementById("person-form");
+    
+    if (personForm) {
 
     personForm.addEventListener("submit", async (e) => {
         e.preventDefault();
@@ -13,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
         };
 
         try {
-            const response = await fetch("http://127.0.0.1:8000/persons/", {  // Cambié la URL aquí para eliminar el prefijo repetido
+            const response = await fetch("http://127.0.0.1:8000/persons/", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -23,14 +25,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (!response.ok) {
                 const errorData = await response.json();
-                throw new Error(errorData.detail || "Error al registrar la persona");  // Extrae el mensaje de error
+                throw new Error(errorData.detail || "Error al registrar la persona");
             }
 
             alert("Persona registrada con éxito");
             personForm.reset();
             document.getElementById("person-error").textContent = "";
+
+            loadPersons();
         } catch (error) {
             document.getElementById("person-error").textContent = error.message;
         }
     });
+
+    async function loadPersons() {
+        try {
+            const personSelect = document.getElementById("person-select");
+            personSelect.innerHTML = "";
+            const response = await fetch("http://127.0.0.1:8000/persons/");
+            const data = await response.json();
+
+            if (data.length === 0) {
+                personSelect.innerHTML = `<option>No existen personas cargadas...</option>`;
+            } else {
+                personSelect.innerHTML = `<option value="">Seleccione una persona...</option>` + 
+                data.map(person => `<option value="${person.id}">${person.name} ${person.surname}</option>`).join("");
+            }
+        } catch (error) {
+            console.error("Error al cargar las personas:", error);
+        }
+    }
+}
 });

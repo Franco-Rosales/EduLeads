@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         try {
-            const response = await fetch("http://127.0.0.1:8000/person-careers", {
+            const response = await fetch("http://127.0.0.1:8000/person-careers/", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     async function loadPersons() {
         try {
-            const response = await fetch("http://127.0.0.1:8000/persons");
+            const response = await fetch("http://127.0.0.1:8000/persons/");
             const data = await response.json();
             if (data.length === 0){
                 personSelect.innerHTML = `<option>No existen personas cargadas...</option>`
@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
         try {
             const careerSelect = document.getElementById("career-select");
             careerSelect.innerHTML = ""
-            const response = await fetch("http://127.0.0.1:8000/careers");
+            const response = await fetch("http://127.0.0.1:8000/careers/");
             const data = await response.json();
             if (data.length === 0) {
                 careerSelect.innerHTML = `<option>No existen carreras cargadas...</option>`
