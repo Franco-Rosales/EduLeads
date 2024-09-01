@@ -117,6 +117,11 @@
         <!-- Lista de Inscripciones a Carreras -->
         <div id="person-career-list" class="screen">
             <h2>Inscripciones a Carreras</h2>
+            <div>
+                <label for="filter-id">Filtrar por ID:</label>
+                <input type="text" id="filter-id" placeholder="Ingrese ID">
+                <button id="apply-filter">Aplicar Filtro</button>
+            </div>
             <table id="career-list-table">
                 <thead>
                     <tr>
@@ -129,9 +134,15 @@
             </table>
         </div>
 
+
         <!-- Lista de Inscripciones a Materias -->
         <div id="person-subject-list" class="screen">
             <h2>Inscripciones a Materias</h2>
+            <div>
+                <label for="subject-filter-id">Filtrar por ID:</label>
+                <input type="text" id="subject-filter-id" placeholder="Ingrese ID">
+                <button id="apply-subject-filter">Aplicar Filtro</button>
+            </div>
             <table id="subject-list-table">
                 <thead>
                     <tr>
@@ -144,7 +155,7 @@
                 <tbody></tbody>
             </table>
         </div>
-    </div>
+
     
     <script src="js/main.js"></script>
     <script src="js/create-career.js"></script>
