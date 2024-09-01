@@ -19,4 +19,4 @@ def test_update_career(client):
 
 def test_delete_career(client):
     response = client.delete("/careers/1")
-    assert response.status_code == 204
+    assert response.status_code == 200

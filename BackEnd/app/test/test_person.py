@@ -33,4 +33,4 @@ def test_update_person(client):
 
 def test_delete_person(client):
     response = client.delete("/persons/1")
-    assert response.status_code == 204
+    assert response.status_code == 200
