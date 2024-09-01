@@ -18,3 +18,13 @@ class PersonSubject(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+class PersonSubjectResponse(BaseModel):
+    person_subject_id: int
+    person_name: str
+    subject_name: str
+    career_name: str
+
+    class Config:
+        orm_mode = True
