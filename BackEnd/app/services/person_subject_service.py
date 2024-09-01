@@ -31,3 +31,16 @@ class PersonSubjectService:
     def get_person_subjects(self, person_id: int):
         """Obtiene todas las materias en las que está inscrita una persona."""
         return self.person_subject_repository.get_person_subjects(person_id)
+
+    def get_person_subjects_paginated(self, skip: int = 0, limit: int = 10, person_subject_id: int = None):
+        """Obtiene inscripciones a materias con paginación y filtro opcional por ID."""
+        person_subjects = self.person_subject_repository.get_person_subjects_paginated(skip, limit, person_subject_id)
+        return [
+            {
+                "person_subject_id": ps.person_subject_id,
+                "person_name": f"{ps.person.name} {ps.person.surname}",
+                "subject_name": ps.subject.name,
+                "career_name": ps.career.name
+            }
+            for ps in person_subjects
+        ]

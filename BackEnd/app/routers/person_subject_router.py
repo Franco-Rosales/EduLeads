@@ -1,9 +1,9 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, Query
 from sqlalchemy.orm import Session
 from app.services.person_subject_service import PersonSubjectService
-from app.schemas.person_subject import PersonSubjectCreate, PersonSubject
+from app.schemas.person_subject import PersonSubjectCreate, PersonSubject, PersonSubjectResponse
 from app.database import get_db
-from typing import List
+from typing import List, Optional
 
 router = APIRouter(prefix="/person-subjects", tags=["person-subjects"])
 
@@ -27,3 +27,14 @@ def get_person_subjects(person_id: int, db: Session = Depends(get_db)):
     """Obtiene todas las materias en las que está inscrita una persona."""
     person_subject_service = PersonSubjectService(db)
     return person_subject_service.get_person_subjects(person_id)
+
+@router.get("/paginated/", response_model=List[PersonSubjectResponse])
+def get_person_subjects_paginated(
+    skip: int = Query(0, ge=0),
+    limit: int = Query(10, ge=1),
+    person_subject_id: Optional[int] = Query(None),
+    db: Session = Depends(get_db)
+):
+    """Obtiene inscripciones a materias con paginación y filtro opcional por ID de inscripción."""
+    person_subject_service = PersonSubjectService(db)
+    return person_subject_service.get_person_subjects_paginated(skip=skip, limit=limit, person_subject_id=person_subject_id)

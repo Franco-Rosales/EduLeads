@@ -1,4 +1,4 @@
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 from app.models.person_subject import PersonSubject
 from app.schemas.person_subject import PersonSubjectCreate
 
@@ -21,3 +21,16 @@ class PersonSubjectRepository:
     def get_person_subjects(self, person_id: int) -> list[PersonSubject]:
         """Obtiene todas las materias en las que está inscrita una persona."""
         return self.db.query(PersonSubject).filter(PersonSubject.person_id == person_id).all()
+
+    def get_person_subjects_paginated(self, skip: int = 0, limit: int = 10, person_subject_id: int = None):
+        """Obtiene inscripciones a materias con paginación y filtro opcional por ID."""
+        query = self.db.query(PersonSubject).options(
+            joinedload(PersonSubject.person), 
+            joinedload(PersonSubject.subject),
+            joinedload(PersonSubject.career)
+        )
+
+        if person_subject_id is not None:
+            query = query.filter(PersonSubject.person_subject_id == person_subject_id)
+
+        return query.offset(skip).limit(limit).all()
