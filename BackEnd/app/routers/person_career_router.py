@@ -1,9 +1,9 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, Query
 from sqlalchemy.orm import Session
 from app.services.person_career_service import PersonCareerService
-from app.schemas.person_career import PersonCareerCreate, PersonCareer
+from app.schemas.person_career import PersonCareerCreate, PersonCareer, PersonCareerResponse
 from app.database import get_db
-from typing import List
+from typing import List, Optional
 
 router = APIRouter(prefix="/person-careers", tags=["person-careers"])
 
@@ -27,3 +27,15 @@ def get_person_careers(person_id: int, db: Session = Depends(get_db)):
     """Obtiene todas las carreras en las que está inscrita una persona."""
     person_career_service = PersonCareerService(db)
     return person_career_service.get_person_careers(person_id)
+
+
+@router.get("/paginated/", response_model=List[PersonCareerResponse])
+def get_person_careers_paginated(
+    skip: int = Query(0, ge=0),
+    limit: int = Query(10, ge=1),
+    person_career_id: Optional[int] = Query(None),
+    db: Session = Depends(get_db)
+):
+    """Obtiene inscripciones a carreras con paginación y filtro opcional por ID de inscripción."""
+    person_career_service = PersonCareerService(db)
+    return person_career_service.get_person_careers_paginated(skip=skip, limit=limit, person_career_id=person_career_id)

@@ -1,4 +1,4 @@
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 from app.models.person_career import PersonCareer
 from app.schemas.person_career import PersonCareerCreate
 
@@ -21,3 +21,16 @@ class PersonCareerRepository:
     def get_person_careers(self, person_id: int) -> list[PersonCareer]:
         """Obtiene todas las carreras en las que está inscrita una persona."""
         return self.db.query(PersonCareer).filter(PersonCareer.person_id == person_id).all()
+
+
+    def get_person_careers_paginated(self, skip: int = 0, limit: int = 10, person_career_id: int = None):
+        """Obtiene inscripciones a carreras con paginación y filtro opcional por ID."""
+        query = self.db.query(PersonCareer).options(
+            joinedload(PersonCareer.person),  
+            joinedload(PersonCareer.career) 
+        )
+
+        if person_career_id is not None:
+            query = query.filter(PersonCareer.person_career_id == person_career_id)
+
+        return query.offset(skip).limit(limit).all()

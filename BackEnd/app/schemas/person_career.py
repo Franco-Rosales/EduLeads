@@ -14,3 +14,11 @@ class PersonCareer(BaseModel):
 
     class Config:
         orm_mode = True
+
+class PersonCareerResponse(BaseModel):
+    person_career_id: int 
+    person_name: str
+    career_name: str
+
+    class Config:
+        orm_mode = True
