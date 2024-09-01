@@ -32,28 +32,26 @@ document.addEventListener("DOMContentLoaded", () => {
                 createCareerForm.reset();
                 document.getElementById("create-career-error").textContent = "";
 
-                // Llamar a loadCareers para actualizar los selects después de crear la carrera
-                loadCareers();
+                // funciones para actualizar el listado de carreras
+                updateCareerList();
             } catch (error) {
                 document.getElementById("create-career-error").textContent = error.message;
             }
         });
 
-        async function loadCareers() {
-            try {
-                const careerSelect = document.getElementById("career-select");
-                careerSelect.innerHTML = "";
-                const response = await fetch("http://127.0.0.1:8000/careers/");
-                const data = await response.json();
-                if (data.length === 0) {
-                    careerSelect.innerHTML = `<option>No existen carreras cargadas...</option>`;
-                    subjectSelect.innerHTML = "";
-                    return;
-                }
+        async function updateCareerList() {
+            // Verificar si la función existe en el contexto global
+            if (window.loadCareersForSubjectCreation) {
+                await window.loadCareersForSubjectCreation();
+            } else {
+                console.error("La función loadCareersForSubjectCreation no está definida.");
+            }
 
-                careerSelect.innerHTML = data.map(career => `<option value="${career.id}">${career.name}</option>`).join("");
-            } catch (error) {
-                console.error("Error al cargar las carreras:", error);
+            // Verificar si la función loadCareers existe en el contexto global
+            if (window.loadCareers) {
+                await window.loadCareers();
+            } else {
+                console.error("La función loadCareers no está definida.");
             }
         }
     }

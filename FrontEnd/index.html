@@ -14,8 +14,11 @@
             <button id="show-subject-registration">Inscripción en Materias</button>
             <button id="show-create-career">Crear Carrera</button>
             <button id="show-create-subject">Crear Materia</button>
+            <button id="show-person-career-list">Lista de Inscripciones a Carreras</button>
+            <button id="show-person-subject-list">Lista de Inscripciones a Materias</button>
         </div>
 
+        <!-- Registro de Personas -->
         <div id="person-registration" class="screen">
             <h2>Registro de Personas</h2>
             <div id="person-error" class="error-message"></div>
@@ -39,9 +42,10 @@
             </form>
         </div>
 
+        <!-- Inscripción en Carreras -->
         <div id="career-registration" class="screen">
             <h2>Inscripción en Carreras</h2>
-            <div id="career-warning" class="warning-message" style="background-color: yellow; color: black;">Antes de inscribir a una persona en una carrera, debe crear al menos una carrera y al menos una persona.</div>
+            <div id="career-warning" class="warning-message" style="background-color: yellow; color: black;">Antes de inscribir a una persona en una carrera, debe crear al menos una carrera y al menos una persona...</div>
 
             <div id="career-error" class="error-message"></div>
             <form id="career-form">
@@ -57,8 +61,8 @@
                 <button type="submit">Inscribir en Carreras</button>
             </form>
         </div>
-        
 
+        <!-- Inscripción en Materias -->
         <div id="subject-registration" class="screen">
             <h2>Inscripción en Materias</h2>
             <div id="subject-error" class="error-message"></div>
@@ -77,8 +81,7 @@
             </form>
         </div>
         
-        
-
+        <!-- Crear Carrera -->
         <div id="create-career" class="screen">
             <h2>Crear Carrera</h2>
             <div id="create-career-error" class="error-message"></div>
@@ -93,6 +96,7 @@
             </form>
         </div>
 
+        <!-- Crear Materia -->
         <div id="create-subject" class="screen">
             <h2>Crear Materia</h2>
             <div id="create-subject-error" class="error-message"></div>
@@ -108,7 +112,38 @@
         
                 <button type="submit">Crear Materia</button>
             </form>
-        </div>        
+        </div>
+
+        <!-- Lista de Inscripciones a Carreras -->
+        <div id="person-career-list" class="screen">
+            <h2>Inscripciones a Carreras</h2>
+            <table id="career-list-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre de la Carrera</th>
+                        <th>Nombre y Apellido</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <!-- Lista de Inscripciones a Materias -->
+        <div id="person-subject-list" class="screen">
+            <h2>Inscripciones a Materias</h2>
+            <table id="subject-list-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre de la Carrera</th>
+                        <th>Nombre de la Materia</th>
+                        <th>Nombre y Apellido</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
     </div>
     
     <script src="js/main.js"></script>
@@ -117,5 +152,7 @@
     <script src="js/person.js"></script>
     <script src="js/career.js"></script>
     <script src="js/subject.js"></script>
+    <script src="js/person-career-list.js"></script>
+    <script src="js/person-subject-list.js"></script>
 </body>
 </html>

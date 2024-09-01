@@ -1,7 +1,20 @@
 document.addEventListener("DOMContentLoaded", () => {
     const createSubjectForm = document.getElementById("create-subject-form");
-   
-    // Cargar carreras
+
+    // Exponer la función globalmente
+    window.loadCareersForSubjectCreation = async function() {
+        try {
+            const response = await fetch("http://127.0.0.1:8000/careers/");
+            const data = await response.json();
+
+            const careerSelect = document.getElementById("subject-careers");
+            careerSelect.innerHTML = data.map(career => `<option value="${career.id}">${career.name}</option>`).join("");
+        } catch (error) {
+            console.error("Error al cargar las carreras:", error);
+        }
+    };
+
+    // Cargar carreras al inicio
     loadCareersForSubjectCreation();
 
     createSubjectForm.addEventListener("submit", async (e) => {
@@ -35,20 +48,11 @@ document.addEventListener("DOMContentLoaded", () => {
             createSubjectForm.reset();
             
             document.getElementById("create-subject-error").textContent = "";
+
+            // Llamar  para actualizar el listado de carreras
+            loadCareersForSubjectCreation();
         } catch (error) {
             document.getElementById("create-subject-error").textContent = error.message;
         }
     });
-
-    async function loadCareersForSubjectCreation() {
-        try {
-            const response = await fetch("http://127.0.0.1:8000/careers/");
-            const data = await response.json();
-
-            const careerSelect = document.getElementById("subject-careers");
-            careerSelect.innerHTML = data.map(career => `<option value="${career.id}">${career.name}</option>`).join("");
-        } catch (error) {
-            console.error("Error al cargar las carreras:", error);
-        }
-    }
 });

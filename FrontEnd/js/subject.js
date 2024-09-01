@@ -8,10 +8,12 @@ document.addEventListener("DOMContentLoaded", () => {
     // Cargar personas al cargar la página
     loadPersons();
 
+    // Exponer la función globalmente para que pueda ser llamada 
+    window.loadPersons = loadPersons;
+
     // Evento para cuando se selecciona una persona
     personSelect.addEventListener("change", async () => {
         const personId = personSelect.value;
-        console.log(`Persona seleccionada: ${personId}`);
         if (personId) {
             await loadCareersForPerson(personId);
         } else {
@@ -23,7 +25,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // Evento para cuando se selecciona una carrera
     careerSelect.addEventListener("change", async () => {
         const careerId = careerSelect.value;
-        console.log(`Carrera seleccionada: ${careerId}`); // Agregado para depuración
         if (careerId) {
             await loadSubjectsForCareer(careerId);
         } else {
@@ -44,14 +45,24 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
+        const result = {};
         for (const subjectId of subjectIds) {
-            await registerPersonToSubject(personId, careerId, subjectId);
+            const data = await registerPersonToSubject(personId, careerId, subjectId);
+            if(data){
+                result[subjectId] = data;
+            }
         }
 
-        alert("Inscripción en materias realizada con éxito");
+        const enrollmentIds = Object.values(result).map(data => data.person_subject_id).join(", ");
+        alert(`Inscripción en materias realizada con éxito, Códigos de seguimiento: ${enrollmentIds}`);
         subjectForm.reset();
-        careerSelect.innerHTML = ""; // Resetear selector de carreras después de la inscripción
-        subjectSelect.innerHTML = ""; // Resetear selector de materias después de la inscripción
+        careerSelect.innerHTML = ""; 
+        subjectSelect.innerHTML = ""; 
+
+        // Llamar a la función para recargar la lista de inscripciones a materias
+        if (typeof loadPersonSubjectList === "function") {
+            loadPersonSubjectList();
+        }
     });
 
     async function loadPersons() {
@@ -59,12 +70,12 @@ document.addEventListener("DOMContentLoaded", () => {
             errorElement.textContent = "";
             const response = await fetch("http://127.0.0.1:8000/persons/?skip=0&limit=100");
             const persons = await response.json();
-            console.log("Personas cargadas:", persons); // Log para verificar datos
             if (persons.length === 0){
                 personSelect.innerHTML = `<option>No existen personas cargadas...</option>`
+            } else {
+                personSelect.innerHTML = `<option value="">Seleccione una persona...</option>` + 
+                persons.map(person => `<option value="${person.id}">${person.name} ${person.surname}</option>`).join("");
             }
-            personSelect.innerHTML = `<option value="">Seleccione una persona...</option>` + 
-            persons.map(person => `<option value="${person.id}">${person.name} ${person.surname}</option>`).join("");        
         } catch (error) {
             console.error("Error al cargar las personas:", error);
             errorElement.textContent = "Error al cargar las personas.";
@@ -77,16 +88,18 @@ document.addEventListener("DOMContentLoaded", () => {
             const response = await fetch(`http://127.0.0.1:8000/person-careers/${personId}`);
             const careers = await response.json();
             if (careers.length === 0) {
-                careerSelect.innerHTML = `<option>La persona no tiene carreras asignadas</option>`
+                careerSelect.innerHTML = `<option>La persona no tiene carreras asignadas</option>`;
                 subjectSelect.innerHTML = "";
                 return;
             }
-            console.log("Carreras cargadas para la persona:", careers); // Log para verificar datos
-            careerSelect.innerHTML = ""; // Asegúrate de vaciar el selector primero
+            careerSelect.innerHTML = "";
 
             for (const career of careers) {
                 const careerResponse = await fetch(`http://127.0.0.1:8000/careers/${career.career_id}`);
                 const careerData = await careerResponse.json();
+                if (careerSelect.innerHTML === "") {
+                    careerSelect.innerHTML += `<option value="">Seleccione una carrera...</option>`;
+                }
                 careerSelect.innerHTML += `<option value="${careerData.id}">${careerData.name}</option>`;
             }
 
@@ -105,8 +118,7 @@ document.addEventListener("DOMContentLoaded", () => {
             errorElement.textContent = "";
             const response = await fetch(`http://127.0.0.1:8000/subjects/subjects_by_career/${careerId}`);
             const subjects = await response.json();
-            console.log("Materias cargadas para la carrera:", subjects); // Log para verificar datos
-            subjectSelect.innerHTML = ""; // Asegúrate de vaciar el selector primero
+            subjectSelect.innerHTML = "";
             subjectSelect.innerHTML = subjects.map(subject => `<option value="${subject.id}">${subject.name}</option>`).join("");
         } catch (error) {
             console.error("Error al cargar las materias:", error);
@@ -133,6 +145,7 @@ document.addEventListener("DOMContentLoaded", () => {
             });
 
             if (!response.ok) throw new Error("Error al inscribir en materias");
+            return await response.json();
         } catch (error) {
             console.error("Error al registrar la inscripción:", error);
             errorElement.textContent = "Error al registrar la inscripción.";

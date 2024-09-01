@@ -22,6 +22,16 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("show-create-subject").addEventListener("click", () => {
         showScreen("create-subject");
     });
+
+    document.getElementById("show-person-career-list").addEventListener("click", () => {
+        showScreen("person-career-list");
+        loadPersonCareerList();
+    });
+
+    document.getElementById("show-person-subject-list").addEventListener("click", () => {
+        showScreen("person-subject-list");
+        loadPersonSubjectList();
+    });
 });
 
 function showScreen(screenId) {

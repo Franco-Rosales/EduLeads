@@ -32,7 +32,13 @@ document.addEventListener("DOMContentLoaded", () => {
             personForm.reset();
             document.getElementById("person-error").textContent = "";
 
+            // Cargar las personas después de registrar una nueva persona
             loadPersons();
+
+            // Asegurarse de actualizar todos los selectores de personas globalmente
+            if (typeof window.loadPersons === "function") {
+                window.loadPersons();
+            }
         } catch (error) {
             document.getElementById("person-error").textContent = error.message;
         }
@@ -55,5 +61,8 @@ document.addEventListener("DOMContentLoaded", () => {
             console.error("Error al cargar las personas:", error);
         }
     }
+
+    // Exponer la función loadPersons globalmente
+    window.loadPersons = loadPersons;
 }
 });
