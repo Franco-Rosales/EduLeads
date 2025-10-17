@@ -1,11 +1,11 @@
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field
 from typing import Optional
-import re
 
 class PersonBase(BaseModel):
     name: str
     surname: str
     email: str
+    dni: int = Field(..., ge=0, description="Documento Nacional de Identidad numérico")
     address: Optional[str] = None
     phone: Optional[str] = None
 
