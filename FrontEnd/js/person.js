@@ -6,10 +6,19 @@ document.addEventListener("DOMContentLoaded", () => {
     personForm.addEventListener("submit", async (e) => {
         e.preventDefault();
 
+        const dniInput = document.getElementById("dni").value.trim();
+        const dni = Number(dniInput);
+
+        if (!dniInput || Number.isNaN(dni)) {
+            document.getElementById("person-error").textContent = "El DNI debe ser un número válido.";
+            return;
+        }
+
         const personData = {
             name: document.getElementById("name").value,
             surname: document.getElementById("last_name").value,
             email: document.getElementById("email").value,
+            dni,
             address: document.getElementById("address").value,
             phone: document.getElementById("phone").value
         };

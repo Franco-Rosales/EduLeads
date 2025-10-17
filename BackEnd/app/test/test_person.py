@@ -3,6 +3,7 @@ def test_create_person(client):
         "name": "John",
         "surname": "Doe",
         "email": "john.doe@example.com",
+        "dni": 12345678,
         "address": "123 Main St",
         "phone": "1234567890"
     })
@@ -10,6 +11,7 @@ def test_create_person(client):
     data = response.json()
     assert data["name"] == "John"
     assert data["surname"] == "Doe"
+    assert data["dni"] == 12345678
 
 def test_get_person(client):
     response = client.get("/persons/1")
@@ -17,12 +19,14 @@ def test_get_person(client):
     data = response.json()
     assert data["name"] == "John"
     assert data["surname"] == "Doe"
+    assert data["dni"] == 12345678
 
 def test_update_person(client):
     response = client.put("/persons/1", json={
         "name": "Jane",
         "surname": "Doe",
         "email": "jane.doe@example.com",
+        "dni": 87654321,
         "address": "456 Main St",
         "phone": "0987654321"
     })
@@ -30,6 +34,7 @@ def test_update_person(client):
     data = response.json()
     assert data["name"] == "Jane"
     assert data["surname"] == "Doe"
+    assert data["dni"] == 87654321
 
 def test_delete_person(client):
     response = client.delete("/persons/1")

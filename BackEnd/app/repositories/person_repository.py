@@ -18,6 +18,10 @@ class PersonRepository:
         """Obtiene una persona por su email."""
         return self.db.query(Person).filter(Person.email == email).first()
 
+    def get_person_by_dni(self, dni: int) -> Person:
+        """Obtiene una persona por su DNI."""
+        return self.db.query(Person).filter(Person.dni == dni).first()
+
 
     def create_person(self, person: PersonCreate) -> Person:
         """Crea una nueva persona."""

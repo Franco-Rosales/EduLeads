@@ -8,6 +8,7 @@ class Person(Base):
     name = Column(String, nullable=False)
     surname = Column(String, nullable=False)
     email = Column(String, unique=True, nullable=False)
+    dni = Column(Integer, unique=True, nullable=False)
     address = Column(String)
     phone = Column(String)
     subjects = relationship('PersonSubject', back_populates='person')

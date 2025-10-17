@@ -16,9 +16,11 @@ class PersonService:
             raise ValueError("El correo electrónico es obligatorio.")
         if self.email_exists(person.email):
             raise ValueError("El correo electrónico ya está registrado.")
-        if len(person.phone) < 7:
+        if self.dni_exists(person.dni):
+            raise ValueError("El DNI ya está registrado.")
+        if person.phone is not None and len(person.phone) < 7:
             raise ValueError("El número de teléfono debe tener al menos 7 dígitos.")
-        
+
         # Crear persona
         return self.person_repository.create_person(person)
 
@@ -37,19 +39,28 @@ class PersonService:
         """Verifica si el email ya está registrado en la base de datos."""
         return self.person_repository.get_person_by_email(email) is not None
 
+    def dni_exists(self, dni: int) -> bool:
+        """Verifica si el DNI ya está registrado en la base de datos."""
+        return self.person_repository.get_person_by_dni(dni) is not None
 
     def update_person(self, person_id: int, person_update: PersonUpdate):
         """Actualiza una persona existente después de validar los datos."""
         person = self.get_person_by_id(person_id)
         if person is None:
             raise ValueError("La persona no existe.")
-        
+
         # Validaciones
         if person_update.email and not person_update.email:
             raise ValueError("El correo electrónico no puede ser vacío.")
-        if person_update.phone and len(person_update.phone) < 7:
+        if (
+            person_update.dni is not None
+            and person_update.dni != person.dni
+            and self.dni_exists(person_update.dni)
+        ):
+            raise ValueError("El DNI ya está registrado.")
+        if person_update.phone is not None and len(person_update.phone) < 7:
             raise ValueError("El número de teléfono debe tener al menos 7 dígitos.")
-        
+
         # Actualizar persona
         return self.person_repository.update_person(person_id, person_update)
 
